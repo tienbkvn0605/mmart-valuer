@@ -1,0 +1,47 @@
+@charset "utf8";
+/* CSS Document */
+
+#footer {
+	border-top:2px solid #2B5EAB;
+	background: #f2f2f2;
+	margin: 10px 0 0 0;
+	padding:30px 0 15px 0;
+	text-align:center;
+	font-size:12px;
+	clear:both;
+}
+
+#footer a {
+	color:#000;
+	text-decoration:none;
+}
+
+#contents_footer {
+	background: #f3850b;
+	margin: 15px 0 0 0;
+	padding:15px 0 15px 0;
+	text-align:center;
+	font-size:12px;
+}
+
+#contents_footer a {
+	color:#fff;
+	text-decoration:none;
+}
+
+#footer a:hover,
+#contents_footer a:hover {
+	text-decoration:underline;
+}
+
+
+#footer .copy {
+	font-size:13px;
+}
+
+#contents_footer .copy {
+	font-size:13px;
+	color:#FFF;
+	font-weight:bold;
+}
+

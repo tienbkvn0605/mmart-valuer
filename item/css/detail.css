@@ -1,0 +1,120 @@
+/* CSS Document */
+
+.button-hyoka {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	margin-bottom: 10px;
+	text-align: center;
+}
+
+.invoice{
+	color:#fff;
+	font-weight:bold;
+	display:inline-block;
+	margin:0;
+	background:#182F8F;
+	padding:5px 10px;
+	border-radius:5px;
+	font-size:15px;
+}
+
+.hasso-button{
+	padding: 0 11px !important;
+
+}
+
+.order_area {
+	background-color: #E8E8FF;
+	border: solid 1px #6699FF;
+}
+
+.iro_sen_auto {
+    background-color: coral;
+    border-width: 1px 1px 1px 1px;
+    border-style: solid solid solid solid;
+    border-color: sandybrown sandybrown sandybrown sandybrown;
+    padding: 5px;
+}
+
+.color_list {
+	margin-bottom: 10px !important;
+	border-width: 1px !important;
+	border:solid #ccc;
+}
+.color_list th {
+	/* font-size:12px;
+	font-weight: normal;
+	background:#cce8fc;
+	color:#555;
+	padding:5px;
+	border:solid #ccc;
+	border-width: 1px !important; */
+}
+.color_list td {
+	/* font-size:12px;
+	font-weight: normal;
+	color:#555; */
+	/* padding:5px;
+	border:solid #ccc; */
+	border-width: 1px !important;
+}
+
+
+.size_list {
+	margin-bottom: 10px !important;
+	border-width: 1px !important;
+	border:solid #ccc;
+}
+.size_list th {
+	/* font-size:12px;
+	font-weight: normal;
+	background:#cce8fc;
+	color:#555;
+	padding:5px;
+	border:solid #ccc;
+	border-width: 1px !important; */
+}
+.size_list td {
+	/* font-size:12px;
+	font-weight: normal;
+	color:#555;
+	padding:5px;
+	border:solid #ccc; */
+	border-width: 1px !important;
+}
+
+.fb_iframe_widget {
+	line-height: 10px;
+}
+
+/* .ck-editor__editable {min-height: 500px;} */
+.bx-pager {
+	display: flow;
+}
+.bx-pager a {
+	height: 40px;
+    width: 60px;
+    display: inline-block;
+    overflow-x: hidden;
+    overflow-y: hidden;
+	margin-bottom: 6px;
+}
+.bx-wrapper .bx-controls-direction a {
+	font-size: 30px;
+    line-height: 30px;
+	font-weight: bold;
+    text-decoration: none;
+	text-indent: unset;
+	z-index: 9;
+
+}
+
+img {
+	vertical-align: baseline !important;
+}
+
+.futei_price {
+	color: #009944;
+	font-weight: bold;
+}

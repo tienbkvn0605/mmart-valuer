@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Style-Type" content="text/css">
+    <title><?php echo(escape($config['title']));?></title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"> -->
+       
+    <script type="text/javascript" language="javascript" src='/outlet/valeur/common/js/list_itemreg_bak240208hung.js?<?php echo time()?>'></script>
+    
+    <script type="text/javascript">
+        $(function () {
+            $('[data-bs-toggle="tooltip"]').tooltip();
+        });
+        jQuery( function() {
+    
+
+            $('.detail_item').on('click', function(){
+                const f_serial = $(this).data('serial');
+                const request = $.ajax({
+                    method: 'POST',
+                    dataType: "json",
+                    url: "/outlet/valeur/kanri/debut_list_modal.php",
+                    data: {'mode':'detail','f_serial':f_serial},
+                    success: function(response) {
+                        console.log('SUCCESS BLOCK');
+                        if(response["m_teikan"] == "futei") {
+                            response["m_teikan"]="不定貫";
+                        }else{
+                            response["m_teikan"]="定貫"
+                        }
+                        var cate2_text = response.c_cate2 != undefined ? '<br/>第二カテ：'+response.c_cate2 : '';
+                        var cate3_text = response.c_cate3 != undefined ? '<br/>第三カテ：'+response.c_cate3 : '';
+                        var cate4_text = response.c_cate4 != undefined ? '<br/>第四カテ：'+response.c_cate4 : '';
+                        var cate5_text = response.m_cate_m5 != '' ? '<br/>種別カテ：'+response.m_cate_m5 : '';
+                        var tr_str = "<tr>" + "<th width='30%'>カテゴリ</th>" +
+                            "<td>" + '第一カテ：'+response.c_cate1 + cate2_text + cate3_text + cate4_text + cate5_text + " </td>" + "</tr>";
+                            tr_str += "<tr>" + "<th>商品名</th>" +
+                            "<td>" + response.m_item + "</td>" + "</tr>";
+                            tr_str += "<tr>" + "<th>商品名ヨミガナ</th>" +
+                            "<td>" + response.m_item_kana + "円</td>" + "</tr>";
+                            tr_str += "<tr>" + "<th>単価</th>" +
+                            "<td>" + response.m_tanka + "</td>" + "</tr>";
+                            tr_str += "<tr>" + "<th>単位</th>" +
+                            "<td>" + response.m_tanka_tani + "</td>" + "</tr>";
+                            tr_str += "<tr>" + "<th>定貫・不定貫</th>" +
+                            "<td>" + response.m_teikan + "</td>" + "</tr>";
+                            tr_str += "<tr>" + "<th>受注最小ロット</th>" +
+                            "<td>" + response.m_lot_small + "</td>" + "</tr>";
+                            tr_str += "<tr>" + "<th>受注最小ロットの合計金額</th>" +
+                            "<td>" + response.m_price_lot + "円</td>" + "</tr>";
+                            tr_str += "<tr>" + "<th>生(原)産地</th>" +
+                            "<td>" + response.m_sanchi + "</td>" + "</tr>";
+                            // tr_str += "<tr>" + "<th>加工地 abc</th>" +
+                            // "<td>" + response.m_bikou + "</td>" + "</tr>";
+                            tr_str += "<tr>" + "<th>栄養成分表示</th>" +
+                            "<td>" + response.m_eiyou + "</td>" + "</tr>";
+                            tr_str += "<tr>" + "<th>形態</th>" +
+                            "<td>" + response.m_keitai + "</td>" + "</tr>";
+                            tr_str += "<tr>" + "<th>荷姿</th>" +
+                            "<td>" + response.m_nisugata + "</td>" + "</tr>";
+                            tr_str += "<tr>" + "<th>サイズ</th>" +
+                            "<td>" + response.m_size + "</td>" + "</tr>";
+                            tr_str += "<tr>" + "<th>賞味期限</th>" +
+                            "<td>" + response.m_shoumi + "</td>" + "</tr>";
+                            tr_str += "<tr>" + "<th>画像</th>" +
+                            "<td><img src='/valeur/ireg/tmp/" + response.m_pic1 + "' width='100%'></td>" + "</tr>";
+                            tr_str += "<tr>" + "<th>納期/発送体制</th>" +
+                            "<td>" + response.m_nouki + "</td>" + "</tr>";
+                            tr_str += "<tr>"+"<th>メニュー</th>" +
+                            "<td>" + response.m_menu + "</td>" + "</tr>";
+                            tr_str += "<tr>"+"<th>原材料、食品添加物</th>" +
+                            "<td>" + response.m_zairyou + "</td>" + "</tr>";
+                            tr_str += "<tr>"+"<th>詳しい商品説明</th>" +
+                            "<td>" + response.m_setsumei + "</td>" + "</tr>";
+                        $("#item_detail_tbl tbody").html(tr_str);
+                    },
+                    error: function(response) {
+                        console.log('ERROR BLOCK');
+                        $("#item_detail_tbl tbody").html("商品詳細修正エラー");
+                    }
+                })
+            });
+            
+        } );
+    
+    </script>
+
+    <style>
+        /* .custom-tooltip{
+            --bs-tooltip-bg: #dc3545 !important;
+            --bs-tooltip-color: var(--bs-white);
+        } */
+    </style>
+    
+</head>
+
+
+    <body>
+        <section class="container-fluid mt-3"> 
+        <?php include_once('/var/www/html3/outlet/valeur/seller/tpl/tpl_header.php')?>
+
+        <div class="alert alert-success" id="success-alert" style="display: none;">
+            <button type="button" class="close" data-dismiss="alert">x</button>
+            商品確認完了しました。
+        </div>
+
+        <div class="mb-3"><a type="button" class="btn btn-outline-primary" href="/outlet/valeur/seller/itemreg.php">新しい商品登録申請</a></div>
+        <nav class="mb-5">
+            <div class="nav nav-tabs " id="nav-tab" role="tablist">
+                <button  class="nav-link ps-4 pe-4 active" id="tab_all" data-bs-toggle="tab" data-bs-target="#nav_tab_all" type="button" role="tab" aria-controls="nav_tab_all" aria-selected="true">
+                    全ての商品
+                </button>
+                <button class="nav-link ps-4 pe-4" id="tab_wait" data-bs-toggle="tab" data-bs-target="#nav_tab_wait" type="button" role="tab" aria-controls="nav_tab_wait" aria-selected="false">
+                    申請中
+                </button>
+                <button class="nav-link  ps-4 pe-4" id="tab_done" data-bs-toggle="tab" data-bs-target="#nav_tab_done" type="button" role="tab" aria-controls="nav_tab_done" aria-selected="false">
+                    公開済み
+                </button>
+                <button class="nav-link  ps-4 pe-4" id="tab_henshin" data-bs-toggle="tab" data-bs-target="#nav_tab_henshin" type="button" role="tab" aria-controls="nav_tab_henshin" aria-selected="false">
+                    返信
+                </button>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+             <!-- 全ての商品 -->
+             <?php if(!empty($A_items)):?>
+                <?php foreach ($A_items as $key => $items) { 
+                    $f_tab_id = 'nav_tab_'.$key;
+                    $f_button_tab = 'tab_'.$key;
+                    $show = $key == 'all' ? 'show active' : '';
+                    ?>
+                    <div class="tab-pane fade <?php echo $show;?>" id="<?php echo $f_tab_id;?>" role="tabpanel" aria-labelledby="#<?php echo $f_button_tab;?>">
+                        <form method="post" id="f_base_<?php echo $key; ?>" name="f_base_<?php echo $key; ?>" action="<?php echo $_SERVER['PHP_SELF']; ?>" target="_self">
+                            <table class="table table-hover table-bordered top" id="shinsei_tbl">
+                                <thead  class="align-middle text-center top">
+                                    <tr>
+                                        <th width="1%">No.</th>
+                                        <th width="5%">状態</th>
+                                        <th width="300">商品名</th>
+                                        <th width="100">画像</th>
+                                        <th width="200">カテゴリー</th>
+                                        <th width="13%">単価/単価単位</th>
+                                        <th width="10%">受注最小ロット</th>
+                                        <th width="15%">受注最小ロットの合計金額</th>
+                                        <!-- <th>価格</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php if(!empty($items)):?>
+                                        <?php foreach ($items as $key_item => $item) { 
+                                            //返信理由
+                                            $f_kyakka_mes = '';
+                                            if($item['review_flg'] == 2 && !empty($item['review_time'])){
+                                                if($item['review_message']){
+                                                    $f_kyakka_mes = 'data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="'.$item['review_message'].'"';
+                                                }
+                                            }
+
+                                            // 状態
+                                            $f_status = '申請中';
+                                            if($item['shounin_flg'] == 1 && $item['review_flg'] == 1){
+                                                $f_status = '公開中';
+                                            }else if(($item['shounin_flg'] == 2 && $item['review_flg'] == 1) 
+                                            || ($item['shounin_flg'] == 0 && $item['review_flg'] == 2)){
+                                                $f_status = '返信';
+                                            }
+
+                                            // 返信場合　価格再設定
+                                            $btn_re_set_price = '';
+                                            
+                                            if($item['shounin_flg'] == 0 && $item['review_flg'] == 2 && !empty($item['review_message'])){
+                                                $btn_re_set_price = '<button 
+                                                    type="button"
+                                                    class="btn btn-outline-danger py-0 re_set_price_html" 
+                                                    data-bs-toggle="modal" 
+                                                    data-bs-target="#detail_item"
+                                                    data-item="'.$item['m_item'].'"
+                                                    data-item_tanka="'.$item['m_tanka'].'"
+                                                    data-item_tani="'.$item['m_tanka_tani'].'"
+                                                    data-item_price_lot="'.$item['m_price_lot'].'"
+                                                    data-item_ai_serial="'.$item['ai_serial'].'"
+                                                >価格再設定</button>';
+                                            }else{
+                                                $btn_re_set_price = '';
+                                            }
+
+                                            //2024-02-08 h.nguyen start
+                                            $btn_item_edit = '';
+                                            if($item['shounin_flg'] == 0 && $item['review_flg'] == 2 && !empty($item['review_message'])) {
+                                                $btn_item_edit = '<button 
+                                                    type="button" 
+                                                    onclick="this.form.submit()"
+                                                    class="btn btn-outline-danger mt-2 py-0 item_edit_button"
+                                                >編集</button>
+                                                <input type="hidden" name="ai_serial" value="'.$item['ai_serial'].'">
+                                                <input type="hidden" name="p_kind" value="item_edit">
+                                                ';
+                                            }
+                                            //2024-02-08 h.nguyen end
+
+                                            ?>
+                                            <tr <?php echo $f_kyakka_mes;?> >
+                                                <td class="text-center"><?php echo $key_item +1 ;?></td>
+                                                <td align="center" valign="middle"><?php echo $f_status;?></td>
+                                                <td class="text-center">
+                                                    <div data-toggle="modal" data-target="#detail_item" style="cursor: pointer;text-decoration: underline;color: #1e87f0;" data-serial="<?php echo $item['ai_serial'];?>" class="detail_item"><?php echo $item['m_item'] ;?></div>
+                                                    <?php echo $btn_item_edit; ?>
+                                                </td>
+                                                <td class="text-center">
+                                                    <img src="<?php echo DF_f_pic_fold.$item['m_pic1'] ?>" width="80">
+                                                </td>
+                                                <td  class="text-center">
+                                                    <?php echo '第一カテ：'.$item['c_cate1']; ?>
+                                                    <?php 
+                                                    // echo isset($item['c_cate2']) ? '第二カテゴリー：'.$item['c_cate2'] : ''; 
+                                                    // echo isset($item['c_cate3']) ? '第三カテゴリー：'.$item['c_cate3'] : ''; 
+                                                    // echo isset($item['c_cate4']) ? '第四カテゴリー：'.$item['c_cate4'] : ''; 
+                                                    // echo isset($item['m_cate_m5']) ? '種別カテゴリ：'.$item['m_cate_m5'] : '';
+                                                     ?>
+                                                </td>
+                                                <td  class="text-center">
+                                                    <span id="tanka_<?php echo $item['ai_serial'];?>"><?php echo number_format($item['m_tanka'])?></span><?php echo '円／'.$item['m_tanka_tani'] ;?>
+                                                    <br/><?php echo $btn_re_set_price;?>
+
+                                                </td>
+                                                <td  class="text-center"><?php echo ($item['m_lot_small']) ;?></td>
+                                                <td  class="text-center" id="lotkingaku_<?php echo $item['ai_serial'];?>"><?php echo number_format($item['m_price_lot']) ;?>円</td>
+                                            </tr>
+                                        <?php } ?>
+                                    <?php ?>
+                                    <?php else:?>
+                                        <td colspan="8" class="text-center pt-4 pb-4"><h4>該当商品情報がありません。</h4></td>
+                                    <?php endif;?>
+                                </tbody>
+                            </table>
+                            
+                        </form>
+                    </div>
+                   
+               <?php } ?> 
+             <?php endif;?>
+        </div>
+           
+        </section>
+        <!-- item detail modal -->
+        <div class="modal fade bd-example-modal-lg" id="detail_item" tabindex="-1" role="dialog" aria-labelledby="editLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editLabel">商品詳細：</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped" id="item_detail_tbl">
+                    <thead>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            </div>
+        </div>
+        </div>
+      
+    </body>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script> -->
+</html>
